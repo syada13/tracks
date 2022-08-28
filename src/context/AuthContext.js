@@ -10,8 +10,39 @@ const authReducer = (state, action) => {
     }
 };
 
+const signup = (disptach) =>{
+    return ({ email, password }) => {
+        // Make an api request to signup with provided email and password.
+
+        // Signup Success: Modify our state, and say that we're authenticated
+
+        // Signup failure: Reflect an error message
+
+    };
+}
+
+const signin = (dispatch) => {
+    return ({ email, password }) =>{
+
+        //Try to signin
+
+        //Signin Success:
+
+        //Signin Failure:
+
+    };
+}
+
+signout = (dispatch) =>{
+    return () => {
+
+        //Signout
+
+    };
+}
+
 export const {Provider, Context} = createDataContext(
     authReducer,
-    {},
+    {signup, signin, signout},
     { isSignedIn: false}
 );
