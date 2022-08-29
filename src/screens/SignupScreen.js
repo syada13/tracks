@@ -32,11 +32,9 @@ const SignupScreen = ({ navigation }) => {
          autoCapitalize="none"
          autoCorrect={false}
         />
-        
-        {state.errorMessage ? 
+        {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text> 
-        : null}
-
+        ): null}
         <Spacer>
          <Button 
           title="Sign Up" 
