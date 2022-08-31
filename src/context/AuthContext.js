@@ -10,11 +10,21 @@ const authReducer = (state, action) => {
         return {...state, errorMessage: action.payload};
         case 'signup':
         return {errorMessage:'',token: action.payload}
+        case 'signin':
+        return {errorMessage:'',token: action.payload}
+        case 'clear-error_message':
+        return {...state, errorMessage: ''}
         default:
         return state;
 
     }
 };
+
+const clearErrorMessage = dispatch => () => {
+    dispatch({ type: 'clear-error_message' });
+};
+
+
 
 const signup = (disptach) => async({ email, password }) => {
         // Make an api request to signup with provided email and password.
@@ -23,7 +33,6 @@ const signup = (disptach) => async({ email, password }) => {
             const response = await trackerApi.post('/signup', { email, password });
             await AsyncStorage.setItem('token', response.data.token);
             disptach({ type: 'signup', payload: response.data.token});
-         
             navigate('TrackList');
 
            }catch(err){
@@ -40,17 +49,25 @@ const signup = (disptach) => async({ email, password }) => {
     };
 
 
-const signin = (dispatch) => {
-    return ({ email, password }) =>{
+const signin = (dispatch) =>  async({ email, password }) => {
 
-        //Try to signin
+        try {
+            const response = await trackerApi.post('signin', { email, password });
+            await AsyncStorage.setItem('token', response.data.token);
+            dispatch({ type: 'signin', payload: response.data.token});
+            navigate('TrackList');
 
-        //Signin Success:
+        }catch(err){
+            dispatch({
+                type: 'add_error',
+                payload:'Something went wrong with sign in'
 
-        //Signin Failure:
+            });
+
+        }
 
     };
-}
+
 
 signout = (dispatch) =>{
     return () => {
@@ -62,6 +79,6 @@ signout = (dispatch) =>{
 
 export const {Provider, Context} = createDataContext(
     authReducer,
-    {signup, signin, signout},
+    { signup, signin, signout,clearErrorMessage },
     { token:'',errorMessage: ''}
 );
