@@ -1,8 +1,8 @@
 import React,{ useContext } from 'react';
 import {View,StyleSheet,Text} from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-import AuthFrom from './components/AuthForm';
-import NavLink from './components/NavLink';
+import AuthFrom from '../components/AuthForm';
+import NavLink from '../components/NavLink';
 import { Context } from '../context/AuthContext';
 
 const SigninScreen = ({ navigation }) => {
